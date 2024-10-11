@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relógio Analógico | Contagem Regressiva de Natal</title>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    
+    
+    <!-- Flocos de neve -->
+    <div class="snowflakes" aria-hidden="true">
+        <div class="snowflake">❅</div>
+        <div class="snowflake">❆</div>
+        <div class="snowflake">❅</div>
+        <div class="snowflake">❆</div>
+        <div class="snowflake">❅</div>
+        <div class="snowflake">❆</div>
+        <div class="snowflake">❅</div>
+        <div class="snowflake">❆</div>
+    </div>
+
+    <div class="container">
+        <div class="clock">
+            <div class="numbers">
+                <span style="--i:0;"><b>12</b></span>
+                <span style="--i:1;"><b>3</b></span>
+                <span style="--i:2;"><b>6</b></span>
+                <span style="--i:3;"><b>9</b></span>
+
+                <div class="circle" id="hr"><i></i></div>
+                <div class="circle" id="mn"><i></i></div>
+                <div class="circle" id="sc"><i></i></div>
+            </div>
+        </div>
+
+        <!-- Cronômetro de contagem regressiva até o Natal -->
+        <div id="christmasCountdown">
+            <p>Contagem Regressiva para o Natal: <span id="countdown"></span></p>
+        </div>
+    </div>
+
+    <script>
+        let hr = document.querySelector('#hr');
+        let mn = document.querySelector('#mn');
+        let sc = document.querySelector('#sc');
+
+        setInterval(() => {
+            let day = new Date();
+            let hh = day.getHours() * 30;
+            let mm = day.getMinutes() * 6;
+            let ss = day.getSeconds() * 6;
+
+            hr.style.transform = `rotateZ(${hh + (mm / 12)}deg)`;
+            mn.style.transform = `rotateZ(${mm}deg)`;
+            sc.style.transform = `rotateZ(${ss}deg)`;
+        }, 1000);
+
+        // Função para atualizar a contagem regressiva até o Natal
+        function updateCountdown() {
+            const now = new Date();
+            const christmas = new Date(now.getFullYear(), 11, 25); // 25 de Dezembro
+
+            if (now > christmas) {
+                christmas.setFullYear(christmas.getFullYear() + 1); // Caso já tenha passado o Natal desse ano
+            }
+
+            const difference = christmas - now;
+            const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+            document.getElementById('countdown').innerHTML = `${days} dias, ${hours} horas, ${minutes} minutos, ${seconds} segundos`;
+        }
+
+        setInterval(updateCountdown, 1000); // Atualiza a contagem a cada segundo
+
+
+        
+    </script>
+</body>
+</html>
